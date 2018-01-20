@@ -2,6 +2,35 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 
+const Button = ({ handleClick, text }) => (
+    <button onClick={handleClick}>
+      {text}
+    </button>
+  )
+
+  const Statistic = ({text, state}) => (
+      <div>
+        {text} {state}
+    </div>
+  )
+
+  const Statistics = ({state}) => (
+    <div>
+        <Statistic text ={state.statTexts[0]} state = {state.hyva}/>
+        <Statistic text ={state.statTexts[1]} state = {state.neutraali}/>
+        <Statistic text ={state.statTexts[2]} state = {state.huono}/>
+        <Statistic text ={state.statTexts[3]} state = {state.ka}/>
+        <Statistic text ={state.statTexts[4]} state = {state.posit}/>
+  </div>
+  )
+
+const Title = ({text}) => (
+    <div>
+        <br/>
+        <b><em> {text}</em></b>
+        <br/><br/>
+     </div>
+)
 
 class App extends React.Component {
     constructor(props) {
@@ -10,60 +39,60 @@ class App extends React.Component {
         hyva: 0,
         neutraali: 0,
         huono: 0,
-        summa: 0
+        summa: 0,
+        statTexts: ["Hyvä","Neutraali","Huono","Keskiarvo","Positiivisia"],
+        ka: 0,
+        posit: 0,
+        lkm: 0
       }
     }
   
     klikHyva = () => {
-      this.setState({
+        return () =>  this.setState({
         hyva: this.state.hyva + 1,
-        summa: this.state.summa + 1
+        summa: this.state.summa + 1,
+        lkm: this.state.lkm + 1,
+        posit: (((this.state.hyva + 1)/(this.state.lkm + 1)) * 100).toFixed(1),
+        ka: ((this.state.summa + 1) / (this.state.lkm + 1)).toFixed(1)
       })
     }
 
     klikNeutraali = () => {
-        this.setState({
-          neutraali: this.state.neutraali + 1
+        return () => this.setState({
+          neutraali: this.state.neutraali + 1,
+          lkm: this.state.lkm + 1,
+          posit: (((this.state.hyva)/(this.state.lkm + 1)) * 100).toFixed(1),
+          ka: ((this.state.summa) / (this.state.lkm + 1)).toFixed(1)
         })
       }
   
     klikHuono = () => {
-      this.setState({
+      return () => this.setState({
         huono: this.state.huono + 1,
-        summa: this.state.summa -1
+        summa: this.state.summa -1,
+        lkm: this.state.lkm + 1,
+        posit: (((this.state.hyva)/(this.state.lkm + 1)) * 100).toFixed(1),
+        ka: ((this.state.summa - 1) / (this.state.lkm + 1)).toFixed(1)
       })
     }
-
-    laskePositiiviset = () => {
-        return (this.state.hyva/(this.state.huono + this.state.neutraali + this.state.hyva)) * 100
-        
-      }
   
     render() {
       return (
         <div>
-            <div>
-            <br/>
-            <b><em> Anna palautetta</em></b>
-            <br/><br/>
-            </div>
-    
-          <div>
-            <button onClick={this.klikHyva}>hyvä</button>
-            <button onClick={this.klikNeutraali}>neutraali</button>
-            <button onClick={this.klikHuono}>huono</button>
-            <div>
-            <br/><br/>
-            <b><em> Statistiikkaa</em></b>
-            </div>
-            <br/>
-            Hyvä {this.state.hyva}<br/>
-            Neutraali {this.state.neutraali}<br/>
-            Huono {this.state.huono}<br/>
-            Keskiarvo {(this.state.summa / 3).toFixed(1)} <br/>
-            Positiivisia {this.laskePositiiviset().toFixed(1)}  %
-
-          </div>
+            <Title text={"Anna palautetta"}/>
+          <Button
+            handleClick={this.klikHyva()}
+            text="Hyvä"/>
+          <Button
+            handleClick={this.klikNeutraali()}
+            text="Neutraali"/>
+          <Button
+            handleClick={this.klikHuono()}
+            text="Huono"/>
+            <Title text={"Statistiikka"}/>
+            <Statistics
+            state={this.state} />
+        
         </div>
       )
     }
