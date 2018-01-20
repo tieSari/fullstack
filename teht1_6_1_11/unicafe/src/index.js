@@ -10,13 +10,14 @@ class App extends React.Component {
         hyva: 0,
         neutraali: 0,
         huono: 0,
-        kaikki: []
+        summa: 0
       }
     }
   
     klikHyva = () => {
       this.setState({
-        hyva: this.state.hyva + 1
+        hyva: this.state.hyva + 1,
+        summa: this.state.summa + 1
       })
     }
 
@@ -29,8 +30,14 @@ class App extends React.Component {
     klikHuono = () => {
       this.setState({
         huono: this.state.huono + 1,
+        summa: this.state.summa -1
       })
     }
+
+    laskePositiiviset = () => {
+        return (this.state.hyva/(this.state.huono + this.state.neutraali + this.state.hyva)) * 100
+        
+      }
   
     render() {
       return (
@@ -52,7 +59,9 @@ class App extends React.Component {
             <br/>
             Hyvä {this.state.hyva}<br/>
             Neutraali {this.state.neutraali}<br/>
-            Huono {this.state.huono}
+            Huono {this.state.huono}<br/>
+            Keskiarvo {(this.state.summa / 3).toFixed(1)} <br/>
+            Positiivisia {this.laskePositiiviset().toFixed(1)}  %
 
           </div>
         </div>
