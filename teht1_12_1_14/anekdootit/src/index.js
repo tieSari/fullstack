@@ -7,12 +7,22 @@ const Button = ({ handleClick, text }) => (
     </button>
   ) 
 
+  const Title = ({text}) => (
+    <div>
+        <br/>
+        <b><em> {text}</em></b>
+        <br/><br/>
+     </div>
+)
+
 class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       selected: 0,
-      votes: [0,0,0,0,0,0]
+      votes: [0,0,0,0,0,0],
+      maxVotes: 0,
+      maxIndex: 0
     }
   }
 
@@ -21,8 +31,9 @@ class App extends React.Component {
            if(index==this.state.selected) {return entry + 1} return entry}
 
     return () =>  this.setState({
-    votes: this.state.votes.map(addVote)
-
+    votes: this.state.votes.map(addVote),
+    maxVotes: this.state.votes[this.state.selected] >= this.state.maxVotes ? this.state.votes[this.state.selected] +1: this.state.maxVotes,
+    maxIndex: this.state.votes[this.state.selected] >= this.state.maxVotes ? this.state.selected : this.state.maxIndex
   })
 }
 
@@ -39,6 +50,8 @@ klikNext = () => {
         <br/>
         <Button handleClick={this.klikVote()} text= {"vote"} />
         <Button handleClick={this.klikNext()} text= {"Next anecdote"} />
+        <Title text={"Anecdote with most votes:"} />
+        {this.props.anecdotes[this.state.maxIndex]} has {this.state.maxVotes} votes
       </div>
     )
   }
