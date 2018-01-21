@@ -11,11 +11,22 @@ class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      selected: 0
+      selected: 0,
+      votes: [0,0,0,0,0,0]
     }
   }
 
-  klikButton = () => {
+  klikVote = () => {
+      const addVote = (entry, index) => {
+           if(index==this.state.selected) {return entry + 1} return entry}
+
+    return () =>  this.setState({
+    votes: this.state.votes.map(addVote)
+
+  })
+}
+
+klikNext = () => {
     return () =>  this.setState({
     selected: Math.floor((Math.random() * 6))
   })
@@ -24,9 +35,10 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        {this.props.anecdotes[this.state.selected]}
+        {this.props.anecdotes[this.state.selected]} has {this.state.votes[this.state.selected]} votes
         <br/>
-        <Button handleClick={this.klikButton()} text= {"Next anecdote"} />
+        <Button handleClick={this.klikVote()} text= {"vote"} />
+        <Button handleClick={this.klikNext()} text= {"Next anecdote"} />
       </div>
     )
   }
