@@ -9,6 +9,7 @@ const Button = ({ handleClick, text }) => (
   )
 
   const Statistic = ({text, state}) => (
+
       <div>
         {text} {state}
     </div>
@@ -77,6 +78,20 @@ class App extends React.Component {
     }
   
     render() {
+        const stats = () => {
+            if (this.state.lkm === 0) {
+              return (
+                <div>
+                  <em>Ei palautteita</em>
+                </div>
+              )
+            }
+            return (
+                <Statistics
+            state={this.state} />
+            )
+          }
+          
       return (
         <div>
             <Title text={"Anna palautetta"}/>
@@ -90,9 +105,7 @@ class App extends React.Component {
             handleClick={this.klikHuono()}
             text="Huono"/>
             <Title text={"Statistiikka"}/>
-            <Statistics
-            state={this.state} />
-        
+            <div>{stats()}</div>  
         </div>
       )
     }
