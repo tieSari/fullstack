@@ -8,20 +8,22 @@ const Button = ({ handleClick, text }) => (
     </button>
   )
 
-  const Statistic = ({text, state}) => (
+  const Statistic = ({text, state, mark}) => (
 
-      <div>
-        {text} {state}
-    </div>
+      <tr>
+       <td> {text}</td> <td> {state} </td> <td> {mark} </td>
+       </tr>
   )
 
-  const Statistics = ({state}) => (
+  const Statistics = ({state, mark}) => (
     <div>
+        <table>
         <Statistic text ={state.statTexts[0]} state = {state.hyva}/>
         <Statistic text ={state.statTexts[1]} state = {state.neutraali}/>
         <Statistic text ={state.statTexts[2]} state = {state.huono}/>
         <Statistic text ={state.statTexts[3]} state = {state.ka}/>
-        <Statistic text ={state.statTexts[4]} state = {state.posit}/>
+        <Statistic text ={state.statTexts[4]} state = {state.posit} mark = {'%'}/>
+        </table>
   </div>
   )
 
