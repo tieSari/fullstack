@@ -48,32 +48,13 @@ class App extends React.Component {
       }
     }
   
-    klikHyva = () => {
+    klikButton = (type, muutos, posit) => {
         return () =>  this.setState({
-        hyva: this.state.hyva + 1,
-        summa: this.state.summa + 1,
+        [type]: this.state[type] + 1,
+        summa: this.state.summa + muutos,
         lkm: this.state.lkm + 1,
-        posit: (((this.state.hyva + 1)/(this.state.lkm + 1)) * 100).toFixed(1),
-        ka: ((this.state.summa + 1) / (this.state.lkm + 1)).toFixed(1)
-      })
-    }
-
-    klikNeutraali = () => {
-        return () => this.setState({
-          neutraali: this.state.neutraali + 1,
-          lkm: this.state.lkm + 1,
-          posit: (((this.state.hyva)/(this.state.lkm + 1)) * 100).toFixed(1),
-          ka: ((this.state.summa) / (this.state.lkm + 1)).toFixed(1)
-        })
-      }
-  
-    klikHuono = () => {
-      return () => this.setState({
-        huono: this.state.huono + 1,
-        summa: this.state.summa -1,
-        lkm: this.state.lkm + 1,
-        posit: (((this.state.hyva)/(this.state.lkm + 1)) * 100).toFixed(1),
-        ka: ((this.state.summa - 1) / (this.state.lkm + 1)).toFixed(1)
+        posit: (((this.state.hyva + posit)/(this.state.lkm + 1)) * 100).toFixed(1),
+        ka: ((this.state.summa + muutos) / (this.state.lkm + 1)).toFixed(1)
       })
     }
   
@@ -96,13 +77,13 @@ class App extends React.Component {
         <div>
             <Title text={"Anna palautetta"}/>
           <Button
-            handleClick={this.klikHyva()}
+            handleClick={this.klikButton('hyva',1,1)}
             text="Hyvä"/>
           <Button
-            handleClick={this.klikNeutraali()}
+           handleClick={this.klikButton('neutraali',0,0)}
             text="Neutraali"/>
           <Button
-            handleClick={this.klikHuono()}
+            handleClick={this.klikButton('huono',-1,0)}
             text="Huono"/>
             <Title text={"Statistiikka"}/>
             <div>{stats()}</div>  
