@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import Kurssi from './components/Kurssi'
 
 class App extends Component {
   render() {
