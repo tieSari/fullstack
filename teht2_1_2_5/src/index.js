@@ -67,6 +67,11 @@ const App = () => {
           nimi: 'Komponenttien tila',
           tehtavia: 14,
           id: 3
+        },
+        {
+          nimi: 'Komponenttien tilajatko ',
+          tehtavia: 18,
+          id: 4
         }
       ]
     }
