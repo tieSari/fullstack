@@ -21,16 +21,20 @@ const Persons = (props) =>
 }
 
 class App extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      persons: [
-        { name: 'Arto Hellas', number: '123 456'}
-      ],
-      newName: '',
-      newNumber: ''
-    }
+constructor(props) {
+  super(props)
+  this.state = {
+    persons: [
+      { name: 'Arto Hellas', number: '040-123456' },
+      { name: 'Martti Tienari', number: '040-123456' },
+      { name: 'Arto Järvinen', number: '040-123456' },
+      { name: 'Lea Kutvonen', number: '040-123456' }
+    ],
+    newName: '',
+    newNumber: '',
+    filter: ''
   }
+}
 handleNameChange = (event) => {
     console.log(event.target.value)
     this.setState({ newName: event.target.value })
@@ -41,17 +45,21 @@ handleNameChange = (event) => {
     this.setState({ newNumber: event.target.value })
   }
 
+   handleFilter = (event) => {
+    console.log(event.target.value)
+    this.setState({ filter: event.target.value })
+  }
+
 addPerson = (event) => {
   event.preventDefault()
+
   const personObject = {
     name: this.state.newName,
     number: this.state.newNumber,
     id: this.state.persons.length + 1
   }
-
-
-const persons = this.state.persons.map((person) => person.name).includes(personObject.name) ? 
-this.state.persons : this.state.persons.concat(personObject)
+  const persons = this.state.persons.map((person) => person.name).includes(personObject.name) ? 
+  this.state.persons : this.state.persons.concat(personObject)
 
   this.setState({
     persons: persons,
@@ -63,12 +71,19 @@ this.state.persons : this.state.persons.concat(personObject)
 
 
   render() {
+
+  const personsToShow = this.state.persons.filter(person => person.name.toUpperCase().startsWith(this.state.filter.toUpperCase()))
+
     return (
       <div>
         <h2>Puhelinluettelo</h2>
-        <form onSubmit={this.addPerson}>
         <div>
-        </div>
+            rajaa näytettäviä  <input
+            value={this.state.filter}
+            onChange={this.handleFilter}
+          />
+          </div>
+        <form onSubmit={this.addPerson}>
           <div>
             nimi:  <input
             value={this.state.newName}
@@ -86,7 +101,9 @@ this.state.persons : this.state.persons.concat(personObject)
           </div>
         </form>
         <h2>Numerot</h2>
-        <Persons persons={this.state.persons}/>
+        <div>
+        <Persons persons={personsToShow}/>
+      </div>
       </div>
     )
   }
