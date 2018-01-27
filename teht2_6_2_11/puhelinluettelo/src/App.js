@@ -1,24 +1,6 @@
 import React from 'react';
+import Persons from './components/Persons'
 
-const Person = (props) =>
-{
-  return(
-  <li>{props.person.name} {props.person.number}</li>
-  )
-}
-
-const Persons = (props) =>
-{
-  const {persons} = props
-  const rivit = () => persons.map((person) => <Person key={person.name} person={person} />)
-  return (
-  <div>
-  <ul>
-   {rivit()}
-   </ul>
-  </div>
-  )
-}
 
 class App extends React.Component {
 constructor(props) {
