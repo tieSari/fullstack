@@ -10,7 +10,7 @@ const Person = (props) =>
 const Persons = (props) =>
 {
   const {persons} = props
-  const rivit = () => persons.map((person) => <Person key={person.id} person={person} />)
+  const rivit = () => persons.map((person) => <Person key={person.name} person={person} />)
   return (
   <div>
   <ul>
@@ -25,10 +25,14 @@ class App extends React.Component {
     super(props)
     this.state = {
       persons: [
-        { name: 'Arto Hellas' , id: 0}
+        { name: 'Arto Hellas'}
       ],
       newName: ''
     }
+  }
+handleNameChange = (event) => {
+    console.log(event.target.value)
+    this.setState({ newName: event.target.value })
   }
 
 addPerson = (event) => {
@@ -38,7 +42,9 @@ addPerson = (event) => {
     id: this.state.persons.length + 1
   }
 
-const persons = this.state.persons.concat(personObject)
+
+const persons = this.state.persons.map((person) => person.name).includes(personObject.name) ? 
+this.state.persons : this.state.persons.concat(personObject)
 
   this.setState({
     persons: persons,
@@ -47,10 +53,6 @@ const persons = this.state.persons.concat(personObject)
   }
 
 
-handleNameChange = (event) => {
-    console.log(event.target.value)
-    this.setState({ newName: event.target.value })
-  }
 
   render() {
     return (
@@ -62,7 +64,7 @@ handleNameChange = (event) => {
         </div>
           <div>
             nimi:  <input
-            value={this.state.newPerson}
+            value={this.state.newName}
             onChange={this.handleNameChange}
           />
           </div>
