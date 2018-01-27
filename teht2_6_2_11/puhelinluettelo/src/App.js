@@ -3,7 +3,7 @@ import React from 'react';
 const Person = (props) =>
 {
   return(
-  <li>{props.person.name}</li>
+  <li>{props.person.name} {props.person.number}</li>
   )
 }
 
@@ -25,9 +25,10 @@ class App extends React.Component {
     super(props)
     this.state = {
       persons: [
-        { name: 'Arto Hellas'}
+        { name: 'Arto Hellas', number: '123 456'}
       ],
-      newName: ''
+      newName: '',
+      newNumber: ''
     }
   }
 handleNameChange = (event) => {
@@ -35,10 +36,16 @@ handleNameChange = (event) => {
     this.setState({ newName: event.target.value })
   }
 
+  handleNumberChange = (event) => {
+    console.log(event.target.value)
+    this.setState({ newNumber: event.target.value })
+  }
+
 addPerson = (event) => {
   event.preventDefault()
   const personObject = {
     name: this.state.newName,
+    number: this.state.newNumber,
     id: this.state.persons.length + 1
   }
 
@@ -48,7 +55,8 @@ this.state.persons : this.state.persons.concat(personObject)
 
   this.setState({
     persons: persons,
-    newName: ''
+    newName: '',
+    newNumber: ''
   })
   }
 
@@ -60,12 +68,17 @@ this.state.persons : this.state.persons.concat(personObject)
         <h2>Puhelinluettelo</h2>
         <form onSubmit={this.addPerson}>
         <div>
-  debug: {this.state.newName}
         </div>
           <div>
             nimi:  <input
             value={this.state.newName}
             onChange={this.handleNameChange}
+          />
+          </div>
+          <div>
+            numero:  <input
+            value={this.state.newNumber}
+            onChange={this.handleNumberChange}
           />
           </div>
           <div>
