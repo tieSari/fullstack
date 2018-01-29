@@ -4,8 +4,17 @@ import axios from 'axios';
 
 const Country = (props) =>
 {
+  let text = ''
+  const showCountryInfo = (event) => {
+      event.preventDefault();
+      console.log('showCountryInfo clicked')
+      alert(`name:  ${props.country.name}\n capital: ${props.country.capital}\n population: ${props.country.population}`
+      )
+  }
   return(
-  <li>{props.country.name}</li>
+  <div> 
+  <a href="#" onClick={showCountryInfo}>{props.country.name} </a>
+  </div>
   )
 }
 
@@ -35,9 +44,9 @@ const Countries = (props) =>
      )
       :
        (   
-         <ul>
+         <div>
          {rivit()}
-        </ul>
+        </div>
        )
        }
        </div>
