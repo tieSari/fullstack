@@ -1,18 +1,13 @@
 import React from 'react';
 import Persons from './components/Persons'
 import axios from 'axios'
+import personService from './services/persons'
 
 
 class App extends React.Component {
 constructor(props) {
   super(props)
   this.state = {
-//    persons: [
- //     { name: 'Arto Hellas', number: '040-123456' },
- //     { name: 'Martti Tienari', number: '040-123456' },
- //     { name: 'Arto Järvinen', number: '040-123456' },
- //     { name: 'Lea Kutvonen', number: '040-123456' }
- //   ],
     persons: [],
     newName: '',
     newNumber: '',
@@ -41,28 +36,27 @@ addPerson = (event) => {
     name: this.state.newName,
     number: this.state.newNumber,
   }
-  const persons = this.state.persons.map((person) => person.name).includes(personObject.name) ? 
-  this.state.persons : this.state.persons.concat(personObject)
-
- axios.post('http://localhost:3002/persons', personObject)
+  if(!this.state.persons.map((person) => person.name).includes(personObject.name))
+  {
+ personService.create(personObject)
     .then(response => {
       console.log(response)
-    })
-
-  this.setState({
-    persons: persons,
+        this.setState({
+    persons: this.state.persons.concat(response),
     newName: '',
     newNumber: ''
   })
+    })
+  }
   }
 
 componentWillMount() {
     console.log('will mount')
-    axios
-      .get('http://localhost:3002/persons')
+    personService
+      .getAll()
       .then(response => {
         console.log('promise fulfilled')
-        this.setState({ persons: response.data })
+        this.setState({ persons: response })
       })
   }
 
