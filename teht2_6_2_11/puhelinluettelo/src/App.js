@@ -40,10 +40,14 @@ addPerson = (event) => {
   const personObject = {
     name: this.state.newName,
     number: this.state.newNumber,
-    id: this.state.persons.length + 1
   }
   const persons = this.state.persons.map((person) => person.name).includes(personObject.name) ? 
   this.state.persons : this.state.persons.concat(personObject)
+
+ axios.post('http://localhost:3002/persons', personObject)
+    .then(response => {
+      console.log(response)
+    })
 
   this.setState({
     persons: persons,
