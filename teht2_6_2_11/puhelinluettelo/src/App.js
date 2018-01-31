@@ -48,6 +48,23 @@ addPerson = (event) => {
   })
     })
   }
+  else
+{
+  const person = this.state.persons.find(p => p.name === this.state.newName)
+  if(window.confirm(`${person.name} on jo luettelossa, korvataanko vanha numero uudella?`))
+  {
+  const changedPerson = { ...person, number: this.state.newNumber }
+  personService.update(person.id,changedPerson)
+    .then(response => {
+      console.log(response)
+        this.setState({
+    persons: this.state.persons.map(person => person.name !== this.state.newName ? person : changedPerson),
+    newName: '',
+    newNumber: ''
+      })
+    })
+  }
+}
   }
 
 componentWillMount() {
