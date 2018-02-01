@@ -16,24 +16,24 @@
       "id": 4
     },
     {
-      "name": "kaisa",
-      "number": "888222",
-      "id": 6
-    },
-    {
-      "name": "villa",
-      "number": "666666",
-      "id": 8
-    },
-    {
       "name": "martti",
       "number": "777777",
       "id": 9
     },
     {
+      "name": "kaisa",
+      "number": "123456",
+      "id": 11
+    },
+    {
       "name": "Lea",
-      "number": "999666",
-      "id": 10
+      "number": "111999",
+      "id": 12
+    },
+    {
+      "name": "Sari Rautanen",
+      "number": "050-333 467",
+      "id": 13
     }
   ]
 }

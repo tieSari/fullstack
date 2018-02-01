@@ -2,7 +2,18 @@ import React from 'react';
 import Persons from './components/Persons'
 import axios from 'axios'
 import personService from './services/persons'
+import './App.css'
 
+const Notification = ({ message }) => {
+  if (message === null) {
+    return null
+  }
+  return (
+    <div className="success">
+      {message}
+    </div>
+  )
+}
 
 class App extends React.Component {
 constructor(props) {
@@ -11,7 +22,8 @@ constructor(props) {
     persons: [],
     newName: '',
     newNumber: '',
-    filter: ''
+    filter: '',
+    success: null
   }
 }
 handleNameChange = (event) => {
@@ -43,9 +55,13 @@ addPerson = (event) => {
       console.log(response)
         this.setState({
     persons: this.state.persons.concat(response),
+    success: `${this.state.newName} on lisätty onnistuneesti.`,
     newName: '',
     newNumber: ''
   })
+  setTimeout(() => {
+            this.setState({success: null})
+          }, 5000) 
     })
   }
   else
@@ -59,13 +75,30 @@ addPerson = (event) => {
       console.log(response)
         this.setState({
     persons: this.state.persons.map(person => person.name !== this.state.newName ? person : changedPerson),
+    success: `Henkilön ${person.name} numero on päivitetty onnistuneesti.`,
     newName: '',
     newNumber: ''
       })
+      setTimeout(() => {
+            this.setState({success: null})
+          }, 5000)
+   // })
     })
-  }
+    .catch(() => {//alert('virhe')
+     personService.create(personObject)
+    .then(response => {
+      console.log(response)
+        this.setState({
+    persons: this.state.persons.map(person => person.name !== this.state.newName ? person : changedPerson),
+    newName: '',
+    newNumber: ''
+  })
+    })
+    
+  })
 }
   }
+}
 
 componentWillMount() {
     console.log('will mount')
@@ -85,6 +118,7 @@ componentWillMount() {
     return (
       <div>
         <h2>Puhelinluettelo</h2>
+        <Notification message={this.state.success}/>
         <div>
             rajaa näytettäviä  <input
             value={this.state.filter}
