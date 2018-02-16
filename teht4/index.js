@@ -9,8 +9,8 @@ const middleware = require('./utils/middleware')
 const blogsRouter = require('./controllers/blogs')
 
 morgan.token('body', function getBody(req) {
-    return JSON.stringify(req.body)
-  })
+  return JSON.stringify(req.body)
+})
 
 
 app.use(cors())
@@ -24,17 +24,17 @@ app.use(middleware.error)
 
 
 if (process.env.NODE_ENV === 'undefined' || process.env.NODE_ENV !== 'production') {
-    require('dotenv').config()
-  }
-  
-  mongoose
-    .connect(process.env.MONGODB_URI)
-    .then( () => { 
-      console.log('connected to database', process.env.MONGODB_URI) 
-    })
-    .catch( err => { 
-      console.log(err) 
-    })  
+  require('dotenv').config()
+}
+
+mongoose
+  .connect(process.env.MONGODB_URI)
+  .then( () => {
+    console.log('connected to database', process.env.MONGODB_URI)
+  })
+  .catch( err => {
+    console.log(err)
+  })
 
 
 mongoose.Promise = global.Promise
