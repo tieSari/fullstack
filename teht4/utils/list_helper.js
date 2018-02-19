@@ -30,6 +30,22 @@ Array.prototype.groupBy = function(prop) {
   }, [])
 }
 
+Array.prototype.groupBySumLikes = function(prop) {
+  return this.reduce(function(groups, item) {
+    const val = item[prop]
+    var found = groups.find(function(item) {
+      return item.author === val
+    })
+    if(found===undefined){
+      groups.push({ 'author':item.author, 'likes':item.likes })
+    }
+    else{
+      found.likes += item.likes
+    }
+    return groups
+  }, [])
+}
+
 const mostBlogs = (blogs) => {
   const groupedBlogs = blogs.groupBy('author')
   console.log(groupedBlogs)
@@ -38,6 +54,14 @@ const mostBlogs = (blogs) => {
   return blogs.length === 0 ? {} : groupedBlogs.filter(blog => blog.blogs === maxi)[0]
 }
 
+const mostLikes = (blogs) => {
+  const groupedBlogs = blogs.groupBySumLikes('author')
+  console.log(groupedBlogs)
+  const maxi =  Math.max(...groupedBlogs.map(blog => blog.likes))
+  console.log('suurin',maxi)
+  return blogs.length === 0 ? {} : groupedBlogs.filter(blog => blog.likes === maxi)[0]
+}
+
 module.exports = {
-  dummy, totalLikes, favoriteBlog, mostBlogs
+  dummy, totalLikes, favoriteBlog, mostBlogs, mostLikes
 }

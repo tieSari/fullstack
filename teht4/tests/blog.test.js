@@ -108,5 +108,30 @@ describe('whoIsWrittenTheMostBlogs', () => {
     expect(result).toEqual({})
   })
 
+})
+
+
+describe('whoHasGotMostLikes', () => {
+
+  test('return most likes got writer', () => {
+    const result = listHelper.mostLikes(listWithManyBlogs)
+    expect(result).toEqual({
+      author: 'Edsger W. Dijkstra',
+      likes: 91
+    })
+  })
+
+  test('return most likes got writer one blog', () => {
+    const result = listHelper.mostLikes(listWithOneBlog)
+    expect(result).toEqual({
+      author: 'Edsger W. Dijkstra',
+      likes: 5
+    })
+  })
+
+  test('return most likes got writer no blog', () => {
+    const result = listHelper.mostLikes(listWithNoBlogs)
+    expect(result).toEqual({})
+  })
 
 })
