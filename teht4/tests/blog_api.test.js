@@ -39,6 +39,9 @@ beforeAll(async () => {
 
   blogObject = new Blog(initialBlogs[1])
   await blogObject.save()
+
+  blogObject = new Blog(initialBlogs[2])
+  await blogObject.save()
 })
 
 test('blogs are returned as json', async () => {
