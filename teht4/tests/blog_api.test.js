@@ -44,18 +44,44 @@ beforeAll(async () => {
   await blogObject.save()
 })
 
-test('blogs are returned as json', async () => {
-  await api
-    .get('/api/blogs')
-    .expect(200)
-    .expect('Content-Type', /application\/json/)
+describe('get_blogs', () => {
+  test('blogs are returned as json', async () => {
+    await api
+      .get('/api/blogs')
+      .expect(200)
+      .expect('Content-Type', /application\/json/)
+  })
+
+  test('all blogs are returned', async () => {
+    const response = await api
+      .get('/api/blogs')
+
+    expect(response.body.length).toBe(initialBlogs.length)
+  })
 })
 
-test('all blogs are returned', async () => {
-  const response = await api
-    .get('/api/blogs')
+describe('post_blogs', () => {
+  test('a valid blog can be added ', async () => {
+    const newBlog = {
+      title: 'blogi',
+      author: 'Jaska',
+      url: 'http://joku.fi'
+    }
 
-  expect(response.body.length).toBe(initialBlogs.length)
+    await api
+      .post('/api/blogs')
+      .send(newBlog)
+      .expect(201)
+      .expect('Content-Type', /application\/json/)
+
+    const response = await api
+      .get('/api/blogs')
+
+    const title = response.body.map(r => r.title)
+
+    expect(response.body.length).toBe(initialBlogs.length + 1)
+    expect(title).toContain('blogi')
+  })
 })
 
 afterAll(() => {

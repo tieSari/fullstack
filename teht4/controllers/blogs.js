@@ -15,7 +15,7 @@ blogsRouter.post('/', (request, response) => {
   blog
     .save()
     .then(result => {
-      Console.log(request.body)
+      console.log(request.body)
       response.status(201).json(result)
     })
 })
