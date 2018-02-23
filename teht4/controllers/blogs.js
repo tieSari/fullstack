@@ -9,9 +9,28 @@ blogsRouter.get('/', (request, response) => {
     })
 })
 
-blogsRouter.post('/', (request, response) => {
-  const blog = new Blog(request.body)
+blogsRouter.get('/:id', async (request, response) => {
+  try
+  {
+    const blog = await Blog.findById(request.params.id)
+    if(blog){
+      response.json(blog)
+    } else {
+      response.status(404).end()
+    }
 
+  } catch (exception) {
+    console.log(exception)
+    response.status(400).send({ error: 'malformatted id' })
+  }
+})
+
+blogsRouter.post('/', (request, response) => {
+  let blog = new Blog(request.body)
+  console.log('likes: ', blog.likes)
+  if(blog.likes === undefined  ){
+    blog.likes = 0
+  }
   blog
     .save()
     .then(result => {

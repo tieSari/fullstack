@@ -84,6 +84,28 @@ describe('post_blogs', () => {
   })
 })
 
+test('blog without likes ', async () => {
+  const newBlog = new Blog({
+    title: 'blogi',
+    author: 'Jaska',
+    url: 'http://joku.fi',
+    _id: '5a422aa71b54a676234d1712',
+  })
+
+  await api
+    .post('/api/blogs')
+    .send(newBlog)
+    .expect(201)
+
+  const response = await api
+    .get('/api/blogs/5a422aa71b54a676234d1712')
+  console.log(response.body)
+
+  const likes = response.body.likes
+
+  expect(likes).toBe(0)
+})
+
 afterAll(() => {
   server.close()
 })
