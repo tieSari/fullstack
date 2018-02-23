@@ -106,6 +106,46 @@ test('blog without likes ', async () => {
   expect(likes).toBe(0)
 })
 
+test('blog without title', async () => {
+  const newBlog = new Blog({
+    author: 'Jaska',
+    url: 'http://joku.fi',
+  })
+
+  const initial = await api
+    .get('/api/blogs')
+
+  await api
+    .post('/api/blogs')
+    .send(newBlog)
+    .expect(400)
+
+  const response = await api
+    .get('/api/blogs')
+
+  expect(response.body.length).toBe(initial.body.length)
+})
+
+test('blog without url ', async () => {
+  const newBlog = new Blog({
+    title: 'blogi',
+    author: 'Jaska',
+  })
+
+  const initial = await api
+    .get('/api/blogs')
+
+  await api
+    .post('/api/blogs')
+    .send(newBlog)
+    .expect(400)
+
+  const response = await api
+    .get('/api/blogs')
+
+  expect(response.body.length).toBe(initial.body.length)
+})
+
 afterAll(() => {
   server.close()
 })

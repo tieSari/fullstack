@@ -31,6 +31,12 @@ blogsRouter.post('/', (request, response) => {
   if(blog.likes === undefined  ){
     blog.likes = 0
   }
+  if(blog.title === undefined  ){
+    return response.status(400).json({ error: 'missing title' })
+  }
+  if(blog.url === undefined  ){
+    return response.status(400).json({ error: 'missing url' })
+  }
   blog
     .save()
     .then(result => {
