@@ -60,64 +60,92 @@ describe('post_blogs', () => {
     expect(blogsAfter.length).toBe(blogsBefore.length + 1)
     expect(title).toContain('blogi')
   })
-})
 
-test('blog without likes ', async () => {
-  const newBlog = new Blog({
-    title: 'blogi',
-    author: 'Jaska',
-    url: 'http://joku.fi',
-    _id: '5a422aa71b54a676234d1712',
+  test('blog without likes ', async () => {
+    const newBlog = new Blog({
+      title: 'blogi',
+      author: 'Jaska',
+      url: 'http://joku.fi',
+      _id: '5a422aa71b54a676234d1712',
+    })
+
+    await api
+      .post('/api/blogs')
+      .send(newBlog)
+      .expect(201)
+
+    const response = await api
+      .get('/api/blogs/5a422aa71b54a676234d1712')
+    console.log(response.body)
+
+    const likes = response.body.likes
+
+    expect(likes).toBe(0)
   })
 
-  await api
-    .post('/api/blogs')
-    .send(newBlog)
-    .expect(201)
+  test('blog without title', async () => {
+    const newBlog = new Blog({
+      author: 'Jaska',
+      url: 'http://joku.fi',
+    })
 
-  const response = await api
-    .get('/api/blogs/5a422aa71b54a676234d1712')
-  console.log(response.body)
+    const blogsBefore = await blogsInDb()
 
-  const likes = response.body.likes
+    await api
+      .post('/api/blogs')
+      .send(newBlog)
+      .expect(400)
 
-  expect(likes).toBe(0)
-})
+    const blogsAfter = await blogsInDb()
 
-test('blog without title', async () => {
-  const newBlog = new Blog({
-    author: 'Jaska',
-    url: 'http://joku.fi',
+    expect(blogsAfter).toEqual(blogsBefore)
   })
 
-  const blogsBefore = await blogsInDb()
+  test('blog without url ', async () => {
+    const newBlog = new Blog({
+      title: 'blogi',
+      author: 'Jaska',
+    })
 
-  await api
-    .post('/api/blogs')
-    .send(newBlog)
-    .expect(400)
+    const blogsBefore = await blogsInDb()
 
-  const blogsAfter = await blogsInDb()
+    await api
+      .post('/api/blogs')
+      .send(newBlog)
+      .expect(400)
 
-  expect(blogsAfter).toEqual(blogsBefore)
+    const blogsAfter = await blogsInDb()
+
+    expect(blogsAfter).toEqual(blogsBefore)
+  })
 })
 
-test('blog without url ', async () => {
-  const newBlog = new Blog({
-    title: 'blogi',
-    author: 'Jaska',
+describe('deletion of a blog', async () => {
+  let addedBlog
+
+  beforeAll(async () => {
+    addedBlog = new Blog({
+      title: 'deletedblogi',
+      author: 'Jaska',
+      url: 'http://joku.fi'
+    })
+    await addedBlog.save()
   })
 
-  const blogsBefore = await blogsInDb()
+  test('DELETE /api/blogs/:id succeeds with proper statuscode', async () => {
+    const blogsAtStart = await blogsInDb()
 
-  await api
-    .post('/api/blogs')
-    .send(newBlog)
-    .expect(400)
+    await api
+      .delete(`/api/blogs/${addedBlog._id}`)
+      .expect(204)
 
-  const blogsAfter = await blogsInDb()
+    const blogsAfterOperation = await blogsInDb()
 
-  expect(blogsAfter).toEqual(blogsBefore)
+    const titles = blogsAfterOperation.map(r => r.title)
+
+    expect(titles).not.toContain(addedBlog.title)
+    expect(blogsAfterOperation.length).toBe(blogsAtStart.length - 1)
+  })
 })
 
 afterAll(() => {
