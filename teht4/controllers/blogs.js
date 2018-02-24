@@ -58,4 +58,27 @@ blogsRouter.post('/', (request, response) => {
     })
 })
 
+blogsRouter.put('/:id',async (request, response) => {
+  let blog = new Blog(request.body)
+  console.log('likes: ', blog.likes)
+  if(blog.likes === undefined  ){
+    blog.likes = 0
+  }
+  if(blog.title === undefined  ){
+    return response.status(400).json({ error: 'missing title' })
+  }
+  if(blog.url === undefined  ){
+    return response.status(400).json({ error: 'missing url' })
+  }
+  try
+  {
+    await Blog.findByIdAndUpdate(request.params.id, blog, { new: true } )
+    return response.json(blog)
+  }
+  catch(exception){
+    console.log(exception)
+    response.status(400).send({ error: 'malformatted id' })
+  }
+})
+
 module.exports = blogsRouter

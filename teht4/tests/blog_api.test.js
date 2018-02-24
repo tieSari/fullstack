@@ -5,8 +5,6 @@ const Blog = require('../models/blog')
 const { format, initialBlogs, nonExistingId, blogsInDb } = require('./test_helper')
 
 
-
-
 beforeAll(async () => {
   await Blog.remove({})
 
@@ -145,6 +143,45 @@ describe('deletion of a blog', async () => {
 
     expect(titles).not.toContain(addedBlog.title)
     expect(blogsAfterOperation.length).toBe(blogsAtStart.length - 1)
+  })
+})
+
+describe('update_blog', () => {
+
+  let newBlog
+
+  beforeAll(async () => {
+    newBlog = new Blog({
+      title: 'updatedblog1',
+      author: 'Jaska',
+      url: 'http://joku.fi'
+    })
+    await newBlog.save()
+  })
+  test('a valid blog can be updated ', async () => {
+
+    const blogsBefore = await blogsInDb()
+
+    const updatedBlog = {
+      title: 'updatedblogi2',
+      author: 'Jaska',
+      url: 'http://joku.fi',
+      _id: newBlog._id
+    }
+
+    await api
+      .put(`/api/blogs/${newBlog._id}`)
+      .send(updatedBlog)
+      .expect(200)
+      .expect('Content-Type', /application\/json/)
+
+    const blogsAfter = await blogsInDb()
+
+    const title = blogsAfter.map(r => r.title)
+
+    expect(blogsAfter.length).toBe(blogsBefore.length)
+    expect(title).toContain(updatedBlog.title)
+    expect(title).not.toContain(newBlog.title)
   })
 })
 
