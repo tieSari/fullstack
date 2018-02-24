@@ -24,6 +24,7 @@
   "homepage": "https://github.com/tieSari/fullstack#readme",
   "dependencies": {
     "babel-eslint": "^8.2.2",
+    "bcrypt": "^1.0.3",
     "cors": "^2.8.4",
     "dotenv": "^5.0.0",
     "eslint": "^4.17.0",
