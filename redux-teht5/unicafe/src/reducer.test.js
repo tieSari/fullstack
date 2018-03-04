@@ -6,7 +6,6 @@ describe('unicafe reducer', () => {
     good: 0,
     ok: 0,
     bad: 0,
-    ka: 0,
     pos: 0
   }
 
@@ -32,8 +31,7 @@ describe('unicafe reducer', () => {
       good: 1,
       ok: 0,
       bad: 0,
-      ka: 0,
-      pos: 0
+      pos: 100.0
     })
   })
 
@@ -49,8 +47,7 @@ describe('unicafe reducer', () => {
       good: 0,
       ok: 1,
       bad: 0,
-      ka: 0,
-      pos: 0
+      pos: 0.0
     })
   })
 
@@ -66,8 +63,7 @@ describe('unicafe reducer', () => {
       good: 0,
       ok: 0,
       bad: 1,
-      ka: 0,
-      pos: 0
+      pos: 0.0
     })
   })
 
@@ -83,7 +79,6 @@ describe('unicafe reducer', () => {
       good: 0,
       ok: 0,
       bad: 0,
-      ka: 0,
       pos: 0
     })
   })

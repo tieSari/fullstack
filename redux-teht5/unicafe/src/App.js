@@ -41,12 +41,8 @@ const Statistiikka = () => {
             <td>{store.getState().bad}</td>
           </tr>
           <tr>
-            <td>keskiarvo</td>
-            <td>{store.getState().ka}</td>
-          </tr>
-          <tr>
-            <td>positiivisia</td>
-            <td></td>
+          <td>positiivisia</td>
+            <td>{store.getState().pos}</td>
           </tr>
         </tbody>
       </table>
