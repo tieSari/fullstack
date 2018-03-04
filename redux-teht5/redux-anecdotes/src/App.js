@@ -14,14 +14,14 @@ class App extends React.Component {
             </div>
             <div>
               has {anecdote.votes}
-              <button>vote</button>
+              <button onClick={e => this.props.store.dispatch( {type: 'NEW_VOTE', data: {anecdote}})}>vote</button>
             </div>
           </div>
         )}
         <h2>create new</h2>
         <form>
           <div><input /></div>
-          <button>create</button> 
+          <button onClick={e => this.props.store.dispatch({type: 'NEW_ANE'})}>create</button> 
         </form>
       </div>
     )
