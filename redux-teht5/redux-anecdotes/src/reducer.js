@@ -31,7 +31,9 @@ const reducer = (state = initialState, action) => {
       const aneToChange = state.find(n => n.id === id)
       const changedAne = { ...aneToChange, votes: action.data.anecdote.votes + 1 }
       console.log(action.data.anecdote)
-      return state.map(ane => ane.id !== id ? ane : changedAne )
+      return state.map(ane => ane.id !== id ? ane : changedAne ).sort(function (a, b) {
+        return b.votes - a.votes;
+      });
     default:
       return state
   }
