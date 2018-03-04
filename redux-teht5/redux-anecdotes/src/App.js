@@ -2,6 +2,14 @@ import React from 'react';
 
 
 class App extends React.Component {
+  addAne = (event) => {
+    event.preventDefault()
+      console.log(event.target.ane.value)
+    this.props.store.dispatch(
+      {type: 'NEW_ANE', data: event.target.ane.value})
+  
+    event.target.ane.value = ''
+  }
   render() {
     const anecdotes = this.props.store.getState()
     return (
@@ -19,9 +27,9 @@ class App extends React.Component {
           </div>
         )}
         <h2>create new</h2>
-        <form>
-          <div><input /></div>
-          <button onClick={e => this.props.store.dispatch({type: 'NEW_ANE'})}>create</button> 
+        <form onSubmit={this.addAne}>
+          <div><input name="ane"/></div>
+          <button type="submit">create</button> 
         </form>
       </div>
     )

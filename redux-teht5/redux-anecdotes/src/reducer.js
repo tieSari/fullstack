@@ -25,7 +25,8 @@ const reducer = (state = initialState, action) => {
   
   switch(action.type) {
     case 'NEW_ANE':
-      return state.concat(action.data.anecdote)
+    console.log(asObject(action.data))
+      return state.concat(asObject(action.data))
     case 'NEW_VOTE':
       const id = action.data.anecdote.id
       const aneToChange = state.find(n => n.id === id)
