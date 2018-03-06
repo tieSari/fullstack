@@ -1,4 +1,6 @@
 import React from 'react'
+import PropTypes from 'prop-types'
+import { notificationCreation } from './../reducers/notificationReducer'
 
 class Notification extends React.Component {
   render() {
@@ -9,10 +11,14 @@ class Notification extends React.Component {
     }
     return (
       <div style={style}>
-        render here notification...
+        {this.context.store.getState().notification}
       </div>
     )
   }
+}
+
+Notification.contextTypes = {
+  store: PropTypes.object
 }
 
 export default Notification
