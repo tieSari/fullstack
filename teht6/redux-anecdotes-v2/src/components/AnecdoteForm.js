@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { aneCreation } from './../reducers/anecdoteReducer'
+import { notificationCreation ,notificationDeletion } from './../reducers/notificationReducer'
 
 class AnecdoteForm extends React.Component {
 
@@ -18,8 +19,12 @@ class AnecdoteForm extends React.Component {
     e.preventDefault()
     console.log(e.target.anecdote.value)
     this.context.store.dispatch(aneCreation(e.target.anecdote.value))
+    this.context.store.dispatch(notificationCreation('you added', e.target.anecdote.value))
+    console.log(this.context.store.getState())
+    this.context.store.dispatch(notificationDeletion(5000))
     e.target.anecdote.value = ''
   }
+
 
   render() {
     return (

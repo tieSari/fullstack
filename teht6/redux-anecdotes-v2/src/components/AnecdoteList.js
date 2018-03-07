@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { voting } from './../reducers/anecdoteReducer'
+import { notificationCreation ,notificationDeletion} from './../reducers/notificationReducer'
 
 class AnecdoteList extends React.Component {
 
@@ -28,8 +29,11 @@ class AnecdoteList extends React.Component {
             </div>
             <div>
               has {anecdote.votes}
-              <button onClick={() =>
+              <button onClick={() => {
                 this.context.store.dispatch(voting(anecdote.id))
+                this.context.store.dispatch(notificationCreation('you voted ' ,anecdote.content))
+                this.context.store.dispatch(notificationDeletion(5000))
+              }
               }>
                 vote
               </button>
