@@ -1,7 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { voting } from './../reducers/anecdoteReducer'
-import { notificationCreation ,notificationDeletion} from './../reducers/notificationReducer'
+import { filterChange } from './../reducers/filterReducer'
+import { notificationCreation ,notificationDeletion } from './../reducers/notificationReducer'
 
 class AnecdoteList extends React.Component {
 
@@ -18,6 +19,7 @@ class AnecdoteList extends React.Component {
 
   render() {
     const anecdotes = this.context.store.getState().anecdote
+   // const anecdotes = this.context.store.getState().filter
     console.log(anecdotes[0])
     return (
       <div>

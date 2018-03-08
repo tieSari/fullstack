@@ -20,7 +20,6 @@ class AnecdoteForm extends React.Component {
     console.log(e.target.anecdote.value)
     this.context.store.dispatch(aneCreation(e.target.anecdote.value))
     this.context.store.dispatch(notificationCreation('you added', e.target.anecdote.value))
-    console.log(this.context.store.getState())
     this.context.store.dispatch(notificationDeletion(5000))
     e.target.anecdote.value = ''
   }

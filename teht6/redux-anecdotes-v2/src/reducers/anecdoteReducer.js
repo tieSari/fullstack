@@ -32,6 +32,10 @@ const anecdoteReducer = (store = initialState, action) => {
 
     return [...store, { content: action.data.content, id: getId(), votes:0 }]
   }
+  if (action.type === 'UPDATE') {
+    store = action.data.anecdotes
+    return store
+  }
 
   return store
 }
@@ -40,6 +44,13 @@ export const aneCreation = (content) => {
   return {
     type: 'CREATE',
     data: { content }
+  }
+}
+
+export const aneUpdate = (anecdotes) => {
+  return {
+    type: 'UPDATE',
+    data: { anecdotes }
   }
 }
 
