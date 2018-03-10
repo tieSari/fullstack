@@ -14,8 +14,8 @@ const createNew = async (content) => {
 }
 
 const update = async (anecdote) => {
-    console.log(anecdote)
-  const response = await axios.put(url+'/' + anecdote.id,...anecdote, { content: anecdote.content, votes: anecdote.votes + 1 })
+  console.log(anecdote)
+  const response = await axios.put(url + '/' + anecdote.id,...anecdote, { content: anecdote.content, votes: anecdote.votes + 1 })
   return response.data
 }
 
