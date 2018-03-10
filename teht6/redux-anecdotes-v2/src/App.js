@@ -7,7 +7,6 @@ import Filter from './components/Filter'
 class App extends React.Component {
 
   render() {
-  //  const anecdotes = this.props.store.getState()
     return (
       <div>
         <h1>Programming anecdotes</h1>
