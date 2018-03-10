@@ -4,14 +4,12 @@ const initialState = 'testinotifikaatio'
 const notificationReducer = (store = initialState, action) => {
   console.log(action.data)
   if (action.type==='ADD') {
-    store = action.data.text + ' ' + action.data.content
     console.log(store)
-    return store
+    return action.data.text + ' ' + action.data.content
   }
 
-  if (action.type==='DELETE') {
-    setTimeout(() => store = '', action.data.time)
-    return store
+  if (action.type==='REMOVE') {
+    return null
   }
 
   return store
@@ -24,10 +22,10 @@ export const notificationCreation = (text, content) => {
   }
 }
 
-export const notificationDeletion = (time) => {
+export const notificationDeletion = () => {
   return {
     type: 'REMOVE',
-    data: { time }
+    data: { }
   }
 }
 

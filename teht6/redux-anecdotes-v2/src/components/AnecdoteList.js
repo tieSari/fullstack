@@ -25,7 +25,7 @@ class AnecdoteList extends React.Component {
               <button onClick={() => {
                 this.props.voting(anecdote.id)
                 this.props.notificationCreation('you voted ' ,anecdote.content)
-                this.props.notificationDeletion(5000)
+                setTimeout(() => {this.props.notificationDeletion()}, 5000)
               }
               }>
                 vote
