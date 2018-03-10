@@ -35,7 +35,7 @@
     },
     {
       "content": "kkkkkkkkk",
-      "votes": 1,
+      "votes": 2,
       "id": "nl2oV4C"
     },
     {
@@ -50,12 +50,22 @@
     },
     {
       "content": "ööööööööö",
-      "votes": 7,
+      "votes": 8,
       "id": "U28f5CN"
     },
     {
       "votes": 1,
       "id": "tnRcUPZ"
+    },
+    {
+      "content": "toimiiko",
+      "votes": 0,
+      "id": "RyjkmYG"
+    },
+    {
+      "content": "uppu",
+      "votes": 0,
+      "id": "4CDQ~d1"
     }
   ]
 }

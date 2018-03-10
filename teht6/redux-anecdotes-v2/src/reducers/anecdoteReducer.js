@@ -22,8 +22,8 @@ import anecdoteService from './../services/anecdotes'
 
 const anecdoteReducer = (store = [], action) => {
   if (action.type==='VOTE') {
-    const old = store.filter(a => a.id !==action.data.id)
-    const voted = store.find(a => a.id === action.data.id)
+    const old = store.filter(a => a.id !==action.data.anecdote.id)
+    const voted = store.find(a => a.id === action.data.anecdote.id)
 
     console.log(action.data.id)
 
@@ -60,10 +60,23 @@ export const anecdotesInitialization = () => {
   }
 }
 
-export const aneCreation = (anecdote) => {
-  return {
-    type: 'CREATE',
-    data: { anecdote }
+export const aneCreation = (content) => {
+  return async (dispatch) => {
+    const anecdote = await anecdoteService.createNew(content)
+    dispatch({
+      type: 'CREATE',
+      data: { anecdote }
+    })
+  }
+}
+
+export const voting = (anecdote) => {
+  return async (dispatch) => {
+    const ane = await anecdoteService.update(anecdote)
+    dispatch({
+      type: 'VOTE',
+      data: { anecdote }
+    })
   }
 }
 
@@ -71,14 +84,6 @@ export const aneUpdate = (anecdotes) => {
   return {
     type: 'UPDATE',
     data: { anecdotes }
-  }
-}
-
-export const voting = (id) => {
-  console.log(id)
-  return {
-    type: 'VOTE',
-    data: { id }
   }
 }
 
