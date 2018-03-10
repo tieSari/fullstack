@@ -2,24 +2,15 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { filterChange } from './../reducers/filterReducer'
 import { aneUpdate } from './../reducers/anecdoteReducer'
+import { connect } from 'react-redux'
 
 class Filter extends React.Component {
-  componentDidMount() {
-    const { store } = this.context
-    this.unsubscribe = store.subscribe(() =>
-      this.forceUpdate()
-    )
-  }
-
-  componentWillUnmount() {
-    this.unsubscribe()
-  }
 
     handleChange = (event) => {
-      const anecdotes = this.context.store.getState().anecdote
-      this.context.store.dispatch(filterChange(event.target.value, anecdotes))
-      const anecdotes2 = this.context.store.getState().filter
-      this.context.store.dispatch(aneUpdate(anecdotes2))
+      const anecdotes = this.props.anecdote
+      this.props.filterChange(event.target.value, anecdotes)
+      const anecdotes2 = this.props.filter
+      this.props.aneUpdate(anecdotes2)
 
     }
     render() {
@@ -34,8 +25,27 @@ class Filter extends React.Component {
       )
     }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    anecdote: state.anecdote,
+    filter: state.filter
+  }
+}
+
+const mapDispatchToProps = {
+  aneUpdate,
+  filterChange
+}
+
+const ConnectedFilter = connect(
+  mapStateToProps,
+  mapDispatchToProps
+) (Filter)
+
+
 Filter.contextTypes = {
   store: PropTypes.object
 }
 
-export default Filter
+export default ConnectedFilter
