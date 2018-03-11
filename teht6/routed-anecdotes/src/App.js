@@ -1,9 +1,18 @@
 import React from 'react'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 
+const newText = (anecdotes) =>
+{setTimeout(() =>
+    {anecdotes.filter(a => a.info === 'new').map(a => <h3>{a.content}</h3>)}, 3000)}
 const AnecdoteList = ({ anecdotes }) => (
   <div>
     <h2>Anecdotes</h2>
+    
+    <div>
+    {newText(anecdotes)}
+    </div>
+    
+
     <ul>
       {anecdotes.map(anecdote => <li key={anecdote.id} >
       <Link to={`/${anecdote.id}`}>{anecdote.content}</Link></li>
@@ -49,7 +58,7 @@ class CreateNew extends React.Component {
     this.state = {
       content: '',
       author: '',
-      info: ''
+      info: 'new'
     }
   }
 
@@ -66,6 +75,9 @@ class CreateNew extends React.Component {
       info: this.state.info,
       votes: 0
     })
+    console.log(this.props.history)
+    this.props.history.push({pathname:'/anecdotes', state: {message: "hello, im a passed message!"}})
+
   }
 
 
@@ -143,21 +155,24 @@ class App extends React.Component {
 
   render() {
 
+console.log(this.props)
+   //    <h2>{this.props.history.state.message}</h2>
     return (
       <div>
         <Router>
           <div>
             <div>
-              <Link to="/">anecdotes</Link> &nbsp;
+            <Link to="/">home</Link> &nbsp;
+              <Link to="/anecdotes">anecdotes</Link> &nbsp;
               <Link to="/create">create new</Link> &nbsp;
               <Link to="/about">about</Link>
             </div>
              <h1>Software anecdotes</h1>
-            <Route exact path="/" render={() => <AnecdoteList anecdotes={this.state.anecdotes} />} />
-                  <Route exact path="/:id" render={({match}) =>
+            <Route exact path="/anecdotes" render={({history}) => <AnecdoteList history={history} anecdotes={this.state.anecdotes} />} />
+                  <Route exact path="/anecdotes/:id" render={({match}) =>
             <Anecdote anecdote={this.anecdoteById(match.params.id)} />}
       />
-            <Route path="/create" render={() => <CreateNew />} />
+            <Route path="/create" render={({history}) => <CreateNew history={history} addNew = {this.addNew} />} />
             <Route path="/about" render={() => <About />} />
           </div>
         </Router>
