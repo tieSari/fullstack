@@ -1,15 +1,40 @@
 import React from 'react'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 
-const newText = (anecdotes) =>
-{setTimeout(() =>
-    {anecdotes.filter(a => a.info === 'new').map(a => <h3>{a.content}</h3>)}, 3000)}
+// const newText = (anecdotes) =>
+// {setTimeout(() =>
+//     {
+//       anecdotes.filter(a => a.info === 'new').map(a => <h3>{a.content}</h3>)
+//       }, 3000)}
+
+const newText =  (anecdotes) =>
+{
+  return anecdotes.filter(a => a.info === 'new').map(a => 'uusi anecdootti: ' +a.content)
+}
+
+const notificationStyle = {
+  color: 'green',
+  fontStyle: 'italic',
+  fontSize: 16
+}
+
+const Notification = ({ message }) => {
+  if (message === null) {
+    return null
+  }
+  return (
+    <div style={notificationStyle}>
+      {message}
+    </div>
+  )
+}
+
 const AnecdoteList = ({ anecdotes }) => (
   <div>
     <h2>Anecdotes</h2>
     
     <div>
-    {newText(anecdotes)}
+    <Notification message= {newText(anecdotes)}></Notification>
     </div>
     
 
