@@ -14,8 +14,12 @@ const newText =  (anecdotes) =>
 
 const notificationStyle = {
   color: 'green',
-  fontStyle: 'italic',
-  fontSize: 16
+  fontStyle: 'bold',
+  fontSize: 16,
+  border: 1,
+  borderStyle: 'solid',
+  padding: 5,
+  margin: 2
 }
 
 const Notification = ({ message }) => {
