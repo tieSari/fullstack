@@ -9,10 +9,32 @@ const notificationReducer = (store = initialState, action) => {
   }
 
   if (action.type==='REMOVE') {
+    console.log('remove')
     return null
   }
 
+  if (action.type==='NOTIFY') {
+    console.log(action.data.text)
+    store = action.data.text
+    setTimeout(() => {store = clear()}, action.data.time)
+    console.log(store)
+  }
+
   return store
+}
+
+function clear(){
+  console.log('clear')
+  return  null}
+
+export const notify = (text, time) => {
+  return async (dispatch) => {
+    dispatch({
+      type: 'NOTIFY',
+      data: { text, time }
+    })
+  }
+
 }
 
 export const notificationCreation = (text, content) => {
